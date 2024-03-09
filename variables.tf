@@ -12,6 +12,9 @@ variable "ami" {
   description = "AMI ID for the EC2 instance"
   default     = "ami-0ba259e664698cbfc"
 }
+variable "vpc_id" {
+  description = "vpc-0502f2708ff475f0b"
+}
 
 variable "security_group_ids" {
   description = "List of security group IDs"
