@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "ap-south-1"
+}
+
 resource "aws_vpc" "new_vpc" {
   cidr_block = "172.16.0.0/20"
   
@@ -61,7 +65,7 @@ resource "aws_security_group" "all_traffic" {
 resource "aws_instance" "test_first" {
   ami                          = "ami-03bb6d83c60fc5f7c"
   instance_type                = "t2.medium"
-  key_name                     = "test1"
+  key_name                     = "abcd123"
   vpc_security_group_ids       = [aws_security_group.all_traffic.id]
   subnet_id                    = aws_subnet.example_subnet.id
   associate_public_ip_address  = true
@@ -74,5 +78,5 @@ resource "aws_instance" "test_first" {
 }
 
 data "template_file" "web_userdata" {
-   template = file("dockerinstall.sh")
+  template = file("dockerinstall.sh")
 }
