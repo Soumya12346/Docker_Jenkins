@@ -10,6 +10,7 @@ resource "aws_instance" "my_instance" {
     Name = var.instance_name
   }
  provisioner "local-exec" {
+    command = "chmod 777 dockerinstall.sh"
     command = "./dockerinstall.sh"
   }
 }
