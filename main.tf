@@ -4,8 +4,8 @@ provider "aws" {
 
 # Create EC2 instance
 resource "aws_instance" "my_instance" {
-  ami           = var.ami
-  instance_type = var.instance_type
+  ami           = "ami-0ba259e664698cbfc"
+  instance_type = "t2.micro"
   tags = {
     Name = var.instance_name
   }
