@@ -51,20 +51,6 @@ pipeline {
                 script {
                     def plan = readFile 'Docker_Jenkins/terraform/tfplan.txt'
                     input message: "Do you want to apply the plan?",
-                          parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-                }
+                        }
             }
-        }
-        
-        stage('Apply') {
-            when {
-                not { equals expected: true, actual: params.destroy }
-            }
-            steps {
-                dir('Docker_Jenkins/terraform') {
-                    sh 'terraform apply -input=false tfplan'
-                }
-            }
-        }
-    }
-}
+            
