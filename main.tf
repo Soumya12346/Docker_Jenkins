@@ -2,11 +2,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# Create VPC
-resource "aws_vpc" "my_vpc" {
-  cidr_block = "10.0.0.0/16"
-}
-
 # Create security group
 resource "aws_security_group" "my_security_group" {
   name        = "my-security-group"
