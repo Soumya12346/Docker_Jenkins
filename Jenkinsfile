@@ -16,14 +16,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh 'rm -rf assignment-docker' 
+                sh 'rm -rf Docker_Jenkins' 
                 sh 'git clone "https://github.com/Soumya12346/Docker_Jenkins.git"'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                dir('assignment-docker/terraform') {
+                dir('Docker_Jenkins/terraform') {
                     script {
                         sh 'terraform init'
                     }
@@ -33,7 +33,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('assignment-docker/terraform') {
+                dir('Docker_Jenkins/terraform') {
                     script {
                         sh "terraform plan -input=false -out=tfplan"
                         sh 'terraform show -no-color tfplan > tfplan.txt'
@@ -49,7 +49,7 @@ pipeline {
             }
             steps {
                 script {
-                    def plan = readFile 'assignment-docker/terraform/tfplan.txt'
+                    def plan = readFile 'Docker_Jenkins/terraform/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                           parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
@@ -61,7 +61,7 @@ pipeline {
                 not { equals expected: true, actual: params.destroy }
             }
             steps {
-                dir('assignment-docker/terraform') {
+                dir('Docker_Jenkins/terraform') {
                     sh 'terraform apply -input=false tfplan'
                 }
             }
