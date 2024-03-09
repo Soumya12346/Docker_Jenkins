@@ -1,13 +1,13 @@
 provider "aws" {
-  region = var.aws_region
+  default = "ap-south-1"
 }
 
-# Create EC2 instance
 resource "aws_instance" "my_instance" {
   ami           = "ami-0ba259e664698cbfc"
   instance_type = "t2.micro"
+
   tags = {
-    Name = var.instance_name
+    Name = "doccker_terraform_instance"
   }
 
   provisioner "local-exec" {
