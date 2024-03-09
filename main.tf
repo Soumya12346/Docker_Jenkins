@@ -38,4 +38,7 @@ resource "aws_instance" "my_instance" {
   tags = {
     Name = var.instance_name
   }
+ provisioner "local-exec" {
+    command = "./dockerinstall.sh"
+  }
 }
