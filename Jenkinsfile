@@ -1,10 +1,9 @@
 pipeline {
-   agent {dockerfile true}
-
+    agent {dockerfile true}
     parameters {
-        string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
-        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
-        booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy infrastructure instead of applying changes?')
+        string(name: 'environment', defaultValue: 'terraform',  description: 'Workspace/environment file to use for deployment')
+        booleanParam(name: 'autoApprove', defaultValue: false,  description: 'Automatically run apply after generating plan?')
+        booleanParam(name: 'destroy', defaultValue: false,  description: 'Destroy infrastructure instead of applying changes?')
     }
 
     environment {
@@ -66,5 +65,17 @@ pipeline {
                 }
             }
         }
+       
+        stage('Destroy') {
+            when {
+                expression { params.destroy }
+            }
+            steps {
+                input message: 'Do you want to destroy the infrastructure?',
+                      ok: 'Destroy'
+                dir('assignment-docker/terraform') {
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
     }
-}
